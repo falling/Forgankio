@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
-        mDrawer.setDrawerListener(mDrawerToggle);
+        mDrawer.addDrawerListener(mDrawerToggle);
 
         mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
                                 "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
                 }
 
-                //execute others actions if needed (ex : modify your header logo)
 
                 return null;
             }
