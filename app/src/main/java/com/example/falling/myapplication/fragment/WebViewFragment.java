@@ -34,7 +34,7 @@ public class WebViewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mWebView = (ObservableWebView) view.findViewById(R.id.webView);
 
-        //must be called before loadUrl()
+        //must be xcalled before loadUrl()
         MaterialViewPagerHelper.preLoadInjectHeader(mWebView);
 
         //have to inject header when WebView page loaded
@@ -50,7 +50,7 @@ public class WebViewFragment extends Fragment {
             }
         });
 
-        mWebView.loadUrl("http://mobile.francetvinfo.fr/");
+        mWebView.loadUrl("http://falling.ga");
 
         MaterialViewPagerHelper.registerWebView(getActivity(), mWebView, null);
     }

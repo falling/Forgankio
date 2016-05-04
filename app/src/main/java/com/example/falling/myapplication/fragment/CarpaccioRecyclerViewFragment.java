@@ -3,14 +3,17 @@ package com.example.falling.myapplication.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.falling.myapplication.R;
+import com.example.falling.myapplication.RecyclerViewAdapter;
 import com.github.florent37.carpaccio.Carpaccio;
 import com.github.florent37.carpaccio.controllers.adapter.OnItemClickListener;
+import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class CarpaccioRecyclerViewFragment extends Fragment {
     private static int ITEM_COUNT = 0;
     private List<Object> mContentItems = new ArrayList<>();
     Carpaccio carpaccio;
+    private RecyclerView.Adapter mAdapter;
 
     public static CarpaccioRecyclerViewFragment newInstance() {
         return new CarpaccioRecyclerViewFragment();
@@ -37,9 +41,11 @@ public class CarpaccioRecyclerViewFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         carpaccio = (Carpaccio) view.findViewById(R.id.carpaccio);
+        mAdapter = new RecyclerViewMaterialAdapter(new RecyclerViewAdapter(mContentItems));
 
         for (int i = 0; i < ITEM_COUNT; ++i)
                 mContentItems.add(new Object());
+        mAdapter.notifyDataSetChanged();
 
         carpaccio.mapList("card",mContentItems);
         carpaccio.onItemClick("card", new OnItemClickListener() {

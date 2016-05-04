@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.example.falling.myapplication.fragment.CarpaccioRecyclerViewFragment;
 import com.example.falling.myapplication.fragment.RecyclerViewFragment;
 import com.example.falling.myapplication.fragment.WebViewFragment;
 import com.github.florent37.materialviewpager.MaterialViewPager;
@@ -59,13 +61,13 @@ public class MainActivity extends AppCompatActivity {
             public Fragment getItem(int position) {
                 switch (position % PAGE_COUNT) {
                     case 0:
-                        return RecyclerViewFragment.newInstance();
+                        return CarpaccioRecyclerViewFragment.newInstance();
                     case 1:
                         return RecyclerViewFragment.newInstance();
                     case 2:
-                        return WebViewFragment.newInstance();
-                    default:
                         return RecyclerViewFragment.newInstance();
+                    default:
+                        return WebViewFragment.newInstance();
                 }
             }
 

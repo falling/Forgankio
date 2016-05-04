@@ -8,8 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.falling.myapplication.R;
+import com.example.falling.myapplication.RecyclerViewAdapter;
+import com.example.falling.myapplication.TestListViewAdapter;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
+import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by florentchampigny on 24/04/15.
@@ -31,7 +37,7 @@ public class ScrollFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mScrollView = (ObservableScrollView) view.findViewById(R.id.scrollView);
-
         MaterialViewPagerHelper.registerScrollView(getActivity(), mScrollView, null);
+
     }
 }
