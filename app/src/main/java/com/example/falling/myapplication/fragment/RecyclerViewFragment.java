@@ -25,8 +25,6 @@ public class RecyclerViewFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
 
-    private static final int ITEM_COUNT = 5;
-
     private List<Object> mContentItems = new ArrayList<>();
 
     public static RecyclerViewFragment newInstance() {
@@ -50,11 +48,23 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         {
-            for (int i = 0; i < ITEM_COUNT; ++i)
+            //读取缓存的操作。。
+            for (int i = 0; i < 10; ++i)
                 mContentItems.add(new Object());
             mAdapter.notifyDataSetChanged();
         }
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
+    }
+
+
+    public void setContentItems(List<Object> contentItems) {
+        mContentItems = contentItems;
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void addObejct(Object object){
+        mContentItems.add(new Object());
+        mAdapter.notifyDataSetChanged();
     }
 }
