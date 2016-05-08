@@ -1,10 +1,14 @@
-package com.example.falling.myapplication;
+package com.example.falling.myapplication.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.falling.myapplication.R;
+import com.example.falling.myapplication.TestBean;
 
 import java.util.List;
 
@@ -13,23 +17,18 @@ import java.util.List;
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<Object> contents;
+
+    List<TestBean> contents;
 
     static final int TYPE_HEADER = 0;
-    static final int TYPE_CELL = 1;
 
-    public RecyclerViewAdapter(List<Object> contents) {
+    public RecyclerViewAdapter(List<TestBean> contents) {
         this.contents = contents;
     }
 
     @Override
     public int getItemViewType(int position) {
-        switch (position) {
-            case 0:
-                return TYPE_HEADER;
-            default:
-                return TYPE_CELL;
-        }
+        return position;
     }
 
     @Override
@@ -40,42 +39,47 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-
         switch (viewType) {
             case TYPE_HEADER: {
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.list_item_card_big, parent, false);
-
-                return new RecyclerView.ViewHolder(view) {
-                };
+                return new ViewHolder(view);
             }
-            case TYPE_CELL: {
+            default: {
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.list_item_card_small, parent, false);
-                TextView textView =  (TextView) view.findViewById(R.id.test);
-                textView.setText("死章鱼");
-                return new RecyclerView.ViewHolder(view) {
+                return new ViewHolder(view);
 
-                };
             }
         }
-        return null;
     }
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        switch (getItemViewType(position)) {
+        ViewHolder viewHolder = (ViewHolder) holder;
+        TestBean bean = contents.get(position);
+        switch (position) {
             case TYPE_HEADER:
+                viewHolder.name.setText(bean.getName());
+                viewHolder.age.setText(bean.getAge() + "岁");
+                viewHolder.sex.setText(bean.getSex());
                 break;
-            case TYPE_CELL:
+            default:
+                viewHolder.name.setText("positon:"+position + "||" + bean.getAge());
                 break;
         }
     }
 
-    class ViewHolder{
-        TextView mMusicName;
-        TextView mMusicAlbum;
-        TextView mMusicSinger;
+    class ViewHolder extends RecyclerView.ViewHolder  {
+        TextView name;
+        TextView age;
+        TextView sex;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            name = (TextView) itemView.findViewById(R.id.name);
+            age = (TextView) itemView.findViewById(R.id.age);
+            sex = (TextView) itemView.findViewById(R.id.sex);
+        }
     }
 }

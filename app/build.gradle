@@ -29,5 +29,6 @@ dependencies {
     compile ('com.github.florent37:carpaccio:1.0.1@aar') {
         transitive = true
     }
+    compile 'com.facebook.fresco:fresco:0.10.0'
 }
 
