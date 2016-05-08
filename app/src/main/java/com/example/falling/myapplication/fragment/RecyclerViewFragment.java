@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.falling.myapplication.R;
 import com.example.falling.myapplication.adapter.AdapterFactory;
@@ -26,10 +27,10 @@ import java.util.List;
 /**
  * Created by florentchampigny on 24/04/15.
  */
-public class RecyclerViewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class RecyclerViewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,RecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerViewAdapter mAdapter;
 
     private List<TestBean> mContentItems = new ArrayList<>();
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -54,7 +55,8 @@ public class RecyclerViewFragment extends Fragment implements SwipeRefreshLayout
         initSwipeRefreshLayout(view);
 
 
-        mAdapter = new RecyclerViewMaterialAdapter(AdapterFactory.getInstance(mContentItems));
+        mAdapter = AdapterFactory.getInstance(mContentItems);
+        mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
 
         {
@@ -99,5 +101,10 @@ public class RecyclerViewFragment extends Fragment implements SwipeRefreshLayout
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         }, 1000);
+    }
+
+    @Override
+    public void onItemClick(View view, Object data) {
+        Toast.makeText(view.getContext(), ((TestBean)data).getAge(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -12,6 +12,7 @@ import com.github.florent37.materialviewpager.header.HeaderDesign;
 public class MainActivity extends AppCompatActivity {
     public static final int PAGE_COUNT = 1;
     private MaterialViewPager mViewPager;
+    private RecyclerViewFragment mRecyclerViewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +20,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
+        mRecyclerViewFragment = RecyclerViewFragment.newInstance();
 
         if (mViewPager != null) {
             mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-
                 @Override
                 public Fragment getItem(int position) {
-                    return RecyclerViewFragment.newInstance();
+                    return mRecyclerViewFragment;
                 }
 
                 @Override
@@ -49,5 +50,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
+
     }
 }
