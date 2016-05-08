@@ -1,8 +1,11 @@
 package com.example.falling.myapplication.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,12 +23,13 @@ import java.util.List;
 /**
  * Created by florentchampigny on 24/04/15.
  */
-public class RecyclerViewFragment extends Fragment {
+public class RecyclerViewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
 
     private List<Object> mContentItems = new ArrayList<>();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public static RecyclerViewFragment newInstance() {
         return new RecyclerViewFragment();
@@ -44,6 +48,9 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
+        initeSwipeRefreshLayout(view);
+
+
         mAdapter = new RecyclerViewMaterialAdapter(new RecyclerViewAdapter(mContentItems));
         mRecyclerView.setAdapter(mAdapter);
 
@@ -57,8 +64,15 @@ public class RecyclerViewFragment extends Fragment {
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }
 
+    private void initeSwipeRefreshLayout(View view) {
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE,Color.RED,Color.GREEN);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
 
     public void setContentItems(List<Object> contentItems) {
+        mContentItems.clear();
         mContentItems = contentItems;
         mAdapter.notifyDataSetChanged();
     }
@@ -66,5 +80,17 @@ public class RecyclerViewFragment extends Fragment {
     public void addObejct(Object object){
         mContentItems.add(new Object());
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10; ++i)
+                    mContentItems.add(new Object());
+                mAdapter.notifyDataSetChanged();                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        },1000);
     }
 }
